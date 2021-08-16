@@ -19,14 +19,16 @@ dependencies {
     implementation "org.apache.spark:spark-sql_2.11:2.4.0"
     implementation "org.apache.spark:spark-catalyst_2.11:2.4.0"
 
+    implementation("org.apache.spark:spark-hive_2.11:$sparkVersion")
+
     testImplementation "org.scalatest:scalatest_2.11:3.0.4"
 }
 
 task sparkTest(dependsOn: ['testClasses'], type: JavaExec) {
-/*    if (System.properties["os.name"].toLowerCase().contains('windows')) {
+    if (System.properties["os.name"].toLowerCase().contains('windows')) {
         environment 'HADOOP_HOME', hadoopHome
         environment 'Path', "${hadoopHome}/bin;${System.getenv("Path")}"
-    }*/
+    }
     mainClass.set( 'org.scalatest.tools.Runner')
     args = ['-R', 'build/classes/scala/test', '-o']
     classpath = sourceSets.test.runtimeClasspath
